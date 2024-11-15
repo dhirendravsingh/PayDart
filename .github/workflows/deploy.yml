@@ -26,5 +26,5 @@ jobs:
         push: true
         tags: dhirendravsingh/paydart:latest
 
-    -name: Verify Pushed Image
+    - name: Verify Pushed Image
       run: docker pull dhirendravsingh/paydart:latest
