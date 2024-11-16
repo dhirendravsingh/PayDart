@@ -31,13 +31,14 @@ jobs:
 
     - name: Update DNS Resolver
       run: |
-        echo "nameserver 8.8.8.8" > /etc/resolv.conf
-        echo "nameserver 8.8.4.4" >> /etc/resolv.conf
+        echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+        echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
 
     - name: Test Connectivity
       run: |
-        ping -c 3 github.com
         nslookup github.com
+        dig github.com
+        ping -c 3 github.com
 
 
     - name: Deploy to EC2
