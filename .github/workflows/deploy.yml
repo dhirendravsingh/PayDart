@@ -37,6 +37,6 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           sudo docker pull dhirendravsingh/paydart:latest
-          sudo docker stop dhirendravsingh || true
-          sudo docker rm dhirendravsingh || true
+          sudo docker stop paydart || true
+          sudo docker rm paydart || true
           sudo docker run -d --name paydart -p 3005:3000 dhirendravsingh/paydart:latest
