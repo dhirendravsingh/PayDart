@@ -29,12 +29,23 @@ jobs:
     - name: Verify Pushed Image
       run: docker pull dhirendravsingh/paydart:latest
 
+    - name: Update DNS Resolver
+      run: |
+        echo "nameserver 8.8.8.8" > /etc/resolv.conf
+        echo "nameserver 8.8.4.4" >> /etc/resolv.conf
+
+    - name: Test Connectivity
+      run: |
+        ping -c 3 github.com
+        nslookup github.com
+
+
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}  
         username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           sudo docker pull dhirendravsingh/paydart:latest
           sudo docker stop paydart || true
